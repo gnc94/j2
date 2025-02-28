@@ -1,0 +1,21 @@
+class CustomException extends Exception {
+    public CustomException(String message) {
+        super(message);
+    }
+}
+
+public class Practical_03 {
+    public static void main(String[] args) {
+        try {
+            int age = -1;
+
+            if (age < 0) {
+                throw new CustomException("Age cannot be a negative number");
+            } else {
+                System.out.println("Age: " + age);
+            }
+        } catch (CustomException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+}
