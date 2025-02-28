@@ -1,0 +1,19 @@
+class DemoStaticMethods {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static int subtract(int a, int b) {
+        return a - b;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        int sum = DemoStaticMethods.add(8, 4);
+        int difference = DemoStaticMethods.subtract(7, 6);
+
+        System.out.println("Sum: " + sum);
+        System.out.println("Difference: " + difference);
+    }
+}
