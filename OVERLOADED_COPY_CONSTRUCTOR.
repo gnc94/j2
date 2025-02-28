@@ -1,0 +1,25 @@
+class MyClass {
+    private int a;
+
+    MyClass() {
+        System.out.println("Default Constructor");
+    }
+
+    MyClass(int value) {
+        a = value;
+        System.out.println("Parameterized Constructor and value is:= " + a);
+    }
+
+    MyClass(MyClass other) {
+        a = other.a;
+        System.out.println("Copy Constructor and value is:= " + a);
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        MyClass obj1 = new MyClass();
+        MyClass obj2 = new MyClass(32);
+        MyClass obj3 = new MyClass(obj2);
+    }
+}
