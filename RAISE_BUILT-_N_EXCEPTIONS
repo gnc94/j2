@@ -1,0 +1,18 @@
+class Div {
+    public int divide(int a) {
+        return a / 0;
+    }
+}
+
+public class Practical_03 {
+    public static void main(String[] args) {
+        Div div = new Div();
+
+        try {
+            int result = div.divide(10);
+            System.out.println("Division by 10: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Number is not divisible by 0");
+        }
+    }
+}
