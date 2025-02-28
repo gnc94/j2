@@ -1,0 +1,36 @@
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class AdapterClassExample {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Adapter Class Example");
+        JLabel label = new JLabel("Click anywhere!", JLabel.CENTER);
+
+        label.setBounds(100, 100, 200, 30);
+        frame.add(label);
+
+        frame.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                label.setText("Mouse clicked at: " + e.getX() + ", " + e.getY());
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                label.setText("Mouse entered the frame!");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label.setText("Mouse exited the frame!");
+            }
+        });
+
+        frame.setLayout(null);
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
