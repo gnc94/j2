@@ -1,0 +1,98 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
+
+public class BouncingBalls extends JPanel {
+
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
+    private static final int BALL_COUNT = 5;
+
+    private Ball[] balls = new Ball[BALL_COUNT];
+
+    public BouncingBalls() {
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(Color.BLACK);
+
+        Random random = new Random();
+        for (int i = 0; i < BALL_COUNT; i++) {
+            int radius = 20 + random.nextInt(20);
+            int x = random.nextInt(WIDTH - radius);
+            int y = random.nextInt(HEIGHT - radius);
+            int dx = 3 + random.nextInt(5);
+            int dy = 3 + random.nextInt(5);
+            Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            balls[i] = new Ball(x, y, dx, dy, radius, color);
+        }
+
+        for (Ball ball : balls) {
+            Thread thread = new Thread(ball);
+            thread.start();
+        }
+
+        Timer timer = new Timer(10, e -> repaint());
+        timer.start();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (Ball ball : balls) {
+            ball.draw(g);
+        }
+    }
+
+    private class Ball implements Runnable {
+        private int x, y, dx, dy, radius;
+        private Color color;
+
+        public Ball(int x, int y, int dx, int dy, int radius, Color color) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.radius = radius;
+            this.color = color;
+        }
+
+        public void draw(Graphics g) {
+            g.setColor(color);
+            g.fillOval(x, y, radius, radius);
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                move();
+                try {
+                    Thread.sleep(16);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+
+        private void move() {
+            x += dx;
+            y += dy;
+
+            if (x < 0 || x + radius > WIDTH) {
+                dx *= -1;
+            }
+            if (y < 0 || y + radius > HEIGHT) {
+                dy *= -1;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Bouncing Balls");
+            BouncingBalls panel = new BouncingBalls();
+            frame.add(panel);
+            frame.pack();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+}
